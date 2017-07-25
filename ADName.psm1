@@ -10,8 +10,11 @@
 # * Initial version. Based on my articles Translate-ADName.ps1 and
 #   Get-ADPathname.ps1 that I published in Windows IT Pro. I refactored and
 #   cleaned up the code and made it (I hope) easier to read.
+#
+# 1.0.0.2 (2017-07-25)
+# * Renamed Edit-ADName to Get-ADName.
 
-#requires -version 2
+#requires -version 3
 
 #------------------------------------------------------------------------------
 # IADsNameTranslate enumeration values
@@ -327,7 +330,7 @@ function Convert-ADName {
 #------------------------------------------------------------------------------
 
 #------------------------------------------------------------------------------
-function Edit-ADName {
+function Get-ADName {
   <#
   .SYNOPSIS
   Outputs Active Directory path names in various formats.
@@ -387,35 +390,35 @@ function Edit-ADName {
   System.String
 
   .EXAMPLE
-  PS C:\> Edit-ADName "LDAP://CN=Ken Dyer,CN=Users,DC=fabrikam,DC=com" -Type Full
+  PS C:\> Get-ADName "LDAP://CN=Ken Dyer,CN=Users,DC=fabrikam,DC=com" -Type Full
   Outputs "CN=Ken Dyer,CN=Users,DC=fabrikam,DC=com". The -Type parameter indicates that the AD path name contains a provider (LDAP).
 
   .EXAMPLE
-  PS C:\> Edit-ADName "CN=Ken Dyer,CN=Users,DC=fabrikam,DC=com" -RemoveLeafElement
+  PS C:\> Get-ADName "CN=Ken Dyer,CN=Users,DC=fabrikam,DC=com" -RemoveLeafElement
   This command removes the leaf element ("CN=Ken Dyer") from the AD path name and outputs "CN=Users,DC=fabrikam,DC=com".
 
   .EXAMPLE
-  PS C:\> Edit-ADName "CN=Ken Dyer,CN=Users,DC=fabrikam,DC=com" -Format Parent
+  PS C:\> Get-ADName "CN=Ken Dyer,CN=Users,DC=fabrikam,DC=com" -Format Parent
   This command outputs only the parent of the AD path name; e.g.: "CN=Users,DC=fabrikam,DC=com".
 
   .EXAMPLE
-  PS C:\> Edit-ADName "CN=Jeff Smith,CN=H/R,DC=fabrikam,DC=com" -Format X500
+  PS C:\> Get-ADName "CN=Jeff Smith,CN=H/R,DC=fabrikam,DC=com" -Format X500
   This commands outputs the AD path element in X500 format "LDAP://CN=Jeff Smith,CN=H\/R,DC=fabrikam,DC=com". Note that the X500 format automatically includes escape characters (i.e., it is not necessary to use -EscapedMode On).
 
   .EXAMPLE
-  PS C:\> Edit-ADName "CN=H/R,DC=fabrikam,DC=com" -AddLeafElement "CN=Jeff Smith" -EscapedMode On
+  PS C:\> Get-ADName "CN=H/R,DC=fabrikam,DC=com" -AddLeafElement "CN=Jeff Smith" -EscapedMode On
   This command outputs "CN=Jeff Smith,CN=H\/R,DC=fabrikam,DC=com" with necessary escape characters inserted.
 
   .EXAMPLE
-  PS C:\> Edit-ADName "CN=Ken Dyer,CN=Users,DC=fabrikam,DC=com" -Split
+  PS C:\> Get-ADName "CN=Ken Dyer,CN=Users,DC=fabrikam,DC=com" -Split
   This command splits the AD path name and outputs a list of the elements: "CN=Ken Dyer", "CN=Users", "DC=fabrikam", and "DC=com".
 
   .EXAMPLE
-  PS C:\> Get-Content DistinguishedNames.txt | Edit-ADName -EscapedMode On
+  PS C:\> Get-Content DistinguishedNames.txt | Get-ADName -EscapedMode On
   This command outputs all of the AD path names listed in the file DistinguishedNames.txt with the needed escape characters.
 
   .EXAMPLE
-  PS C:\> Edit-ADName -GetEscapedElement "OU=H/R"
+  PS C:\> Get-ADName -GetEscapedElement "OU=H/R"
   This command inserts the needed escape characters into the name element and outputs "OU=H\/R".
 
   .LINK
